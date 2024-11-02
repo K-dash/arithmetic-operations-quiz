@@ -19,16 +19,21 @@ fn main() {
                 std::io::stdin().read_line(&mut ans_input).unwrap();
 
                 // ans_inputからtrimで改行を取り除き、parseで整数(i32)に変換する
-                let ans_input = ans_input.trim().parse::<i32>().unwrap();
-
-                dbg!(ans_input);
-
-                if ans_input == op1 + op2 {
-                    println!("正解!");
-                    num_of_correct += 1; // brackする必要がなくなった
-                    break;
-                } else {
-                    println!("不正解!");
+                // こっちはResult型で実装する場合
+                match ans_input.trim().parse::<i32>() {
+                    Ok(num) => {
+                        if num == op1 + op2 {
+                            println!("正解!");
+                            num_of_correct += 1; // 正解数をインクリメント
+                            break;
+                        } else {
+                            println!("不正解!");
+                        }
+                    }
+                    Err(_) => {
+                        println!("数値を入力してください");
+                        continue;
+                    }
                 }
             }
             2 => loop {  // quiz_mode が 2 の場合は 減算クイズ
@@ -42,16 +47,21 @@ fn main() {
                 std::io::stdin().read_line(&mut ans_input).unwrap();
 
                 // ans_inputからtrimで改行を取り除き、parseで整数(i32)に変換する
-                let ans_input = ans_input.trim().parse::<i32>().unwrap();
-
-                dbg!(ans_input);
-
-                if ans_input == op1 - op2 {
-                    println!("正解!");
-                    num_of_correct += 1; // 正解数をインクリメント
-                    break;
-                } else {
-                    println!("不正解!");
+                // こっちはOption型で実装する場合
+                match ans_input.trim().parse::<i32>().ok() {
+                    Some(num) => {
+                        if num == op1 - op2 {
+                            println!("正解!");
+                            num_of_correct += 1; // 正解数をインクリメント
+                            break;
+                        } else {
+                            println!("不正解!");
+                        }
+                    }
+                    None => {
+                        println!("数値を入力してください");
+                        continue;
+                    }
                 }
             }
             _ => unreachable!(),
