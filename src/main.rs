@@ -7,7 +7,7 @@ fn main() {
         // quiz_mode をランダムに1か2に決める
         let quiz_mode = rand::thread_rng().gen_range(1..=2);
         match quiz_mode {
-            1 => {
+            1 =>  loop {
                 // quiz_mode が 1 の場合は 加算クイズ
                 let op1 = rand::thread_rng().gen_range(1..100);
                 let op2 = rand::thread_rng().gen_range(1..100);
@@ -26,11 +26,12 @@ fn main() {
                 if ans_input == op1 + op2 {
                     println!("正解!");
                     num_of_correct += 1; // brackする必要がなくなった
+                    break;
                 } else {
                     println!("不正解!");
                 }
             }
-            2 => {  // quiz_mode が 2 の場合は 減算クイズ
+            2 => loop {  // quiz_mode が 2 の場合は 減算クイズ
                 let op1 = rand::thread_rng().gen_range(1..100);
                 let op2 = rand::thread_rng().gen_range(1..100);
 
@@ -48,6 +49,7 @@ fn main() {
                 if ans_input == op1 - op2 {
                     println!("正解!");
                     num_of_correct += 1; // 正解数をインクリメント
+                    break;
                 } else {
                     println!("不正解!");
                 }
